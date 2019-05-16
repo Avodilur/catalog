@@ -1,25 +1,39 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}" />
 </head>
 <body>
     <div id="wrap">
         <div id="header">
 
         </div>
-    </div>
-    <div id="content">
-        <div id="leftcol">
-
-        </div>
         <div id="main">
-
+            <div id="leftcol">
+                <div class ="menu">
+                    <ul class = "category">
+                        {% for name in categories %}
+                            <li><a href="">{{ name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div id="content">
+                {%  for name, image in products %}
+                    <div class="item">
+                        <p class = "title">{{ name }}</p>
+                        <div class="photo">
+                            <img src="">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div id="footer">
-
+        <div id="footer">
+        </div>
     </div>
 </body>
 </html>

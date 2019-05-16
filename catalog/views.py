@@ -9,8 +9,10 @@ from django.shortcuts import render
 def catalog(request):
     pass
 
-def category(request):
+def category(request, category):
+    id = request.GET.get("page", "1")
     pass
 
-def subcategory(request):
+def subcategory(request, category, subcategory):
+    id = request.GET.get("page", "1")
     pass
