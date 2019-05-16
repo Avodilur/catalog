@@ -7,9 +7,9 @@ from django.contrib import admin
 from django.contrib import admin
 
 
-from .models import Cpu
-from .models import Monitor
+from .models import Categories
+from .models import Product
 
 
-admin.site.register(Monitor)
-admin.site.register(Cpu)
+admin.site.register(Categories)
+admin.site.register(Product)

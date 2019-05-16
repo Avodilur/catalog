@@ -3,7 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^$', name='catalog'),
-    url(r'^monitors/', include('catalog.mon_urls')),
-    url(r'^cpu/', include('catalog.cpu_urls')),
+    url(r'^$', views.catalog, name='catalog'),
+    url(r'^(?P<category>\D+)/(?P<subcategory>\D+)/', views.subcategory),
+    url(r'^(?P<category>\D+)/', views.category),
 ]

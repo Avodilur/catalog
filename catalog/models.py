@@ -8,17 +8,22 @@ from django.db import models
 from django.db import models
 
 
-class Monitor(models.Model):
-    mon_name = models.TextField()
-    mon_diagonal = models.CharField(max_length=5)
+class Categories(models.Model):
+    name = models.CharField(max_length=20)
+    parent = models.IntegerField(default=0)
+    url = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.mon_name
+        return {self.id: self.name}
 
 
-class Cpu(models.Model):
-    cpu_name = models.CharField(max_length=100)
-    cpu_firm = models.CharField(max_length=20)
+class Product(models.Model):
+    name = models.CharField(max_length=20),
+    description = models.CharField(max_length=200)
+    url = models.CharField(max_length=30)
+    image = models.CharField()
+    count = models.IntegerField
+    price = models.IntegerField
 
     def __str__(self):
-        return self.cpu_name
+        return {self.id: self.name}
