@@ -4,18 +4,24 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 # Create your views here.
-from .models import Category
-from .models import Product
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from .models import Category
+from .models import Product
 
 
-def products():
-    list = Product.objects.all()
-    paginator = Paginator(list, 12)
+def product(request):
+    list_products = Product.objects.all()
+    paginator = Paginator(list_products, 12)
     page = request.GET.get('page')
     try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+    vars = dict(products=products)
 
 
 def catalog(request):
@@ -30,4 +36,3 @@ def category(request, category):
 
 def subcategory(request, category, subcategory):
     id = request.GET.get("page", "1")
-    pass

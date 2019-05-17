@@ -22,14 +22,22 @@
                 </div>
             </div>
             <div id="content">
-                {%  for name, image in products %}
-                    <div class="item">
-                        <p class = "title">{{ name }}</p>
+                <div id="product">
+                    {% for product in products %}
+                        <p class="title">{{ product.name }}</p>
                         <div class="photo">
-                            <img src="">
+                            <img src="{% static 'images' %}/{{ product.image }}.jpg">
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
+                <div id="pages">
+                    {% if products.has_previous %}
+                        <a href="?page={{ products.previous_page_number }}">&lt&lt&ltНазад</a>
+                    {% endif %}
+                    {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}">Вперед&gt&gt&gt</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
         <div id="footer">
