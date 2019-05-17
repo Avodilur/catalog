@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>{% url 'catalog' %}{{ category }}/</p>
+    <p>{{ path }}</p>
+{#    <ul>#}
+{#        {% for name in categories %}#}
+{#            <li><a href="{{ path }}/{{ name.url }}">{{ name }}</a></li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+    <ul>
+        {% for name in categories %}
+            <li><a href="">{{ name }}</a>
+            {% url 'subcategory' cat subcat m%}
+            </li>
+        {% endfor %}
+
+    </ul>
+</body>
+</html>
