@@ -1,0 +1,11 @@
+{% extends 'catalog/catalog.html' %}
+{% load staticfiles %}
+
+{% block leftcol %}
+    <ul>
+        <li id="topic">Категории:</li>
+        {% for subcategory in subcategories %}
+            <li class="subcategory"><a href="{% url 'subcategory' category subcategory.url%}">{{ subcategory.name}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock leftcol %}

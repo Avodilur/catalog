@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Электронный каталог{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+
+        </div>
+        <div id="main">
+            <div id="leftcol">
+                {% block leftcol %}{% endblock leftcol %}
+            </div>
+            <div id="content">
+                {% block content %}{% endblock content %}
+            </div>
+        </div>
+        <div id="footer">
+
+        </div>
+    </div>
+</body>
+</html>

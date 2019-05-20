@@ -10,7 +10,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
-    parent = models.IntegerField(default=0)
+    parent = models.ForeignKey('self', null=True, blank=True)
     url = models.CharField(max_length=30)
     image = models.CharField(max_length=30, blank=True, null=True)
 

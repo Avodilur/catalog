@@ -23,6 +23,7 @@ body {
 }
 
 #main {
+    padding-left: 15px;
     padding-bottom: 50px;
     overflow: hidden;
 }
@@ -30,7 +31,6 @@ body {
 #leftcol {
     width: 20%;
     float: left;
-    padding-top: 25px
 }
 
 #content {
@@ -42,32 +42,4 @@ body {
     position: absolute;
     bottom: 0;
 }
-
-a {
-    color: #5b80b2;
-}
-
-#address {
-    bottom: 10px;
-}
-
-.menu {
-    border: 1px;
-}
-
-.menu.category>li {
-    list-style-type: none;
-}
-
-.menu.category>li>a{
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    border-top: 1px solid black;
-}
-
-.menu.category>li:first-child>a{
-    border-top: 0;
-}
-
 
