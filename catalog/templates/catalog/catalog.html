@@ -3,7 +3,7 @@
 
 {% block leftcol %}
     <ul>
-        <li id="topic">Категории:</li>
+        <li><span id="topic">Категории:</span></li>
         {% for category in categories %}
             <li class="category"><a href="{% url 'category' category.url %}">{{ category.name}}</a></li>
         {% endfor %}
@@ -11,6 +11,11 @@
 {% endblock leftcol %}
 
 {% block content %}
+    <span id="address">
+    {% for key, value in route.items %}
+        <a href="{{ value }}">/ {{ key }}</a>
+    {% endfor %}
+    </span>
     {% for product in products %}
         <div class="product">
             <p class="title">{{ product.name|capfirst }}</p>

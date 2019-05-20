@@ -3,9 +3,9 @@
 
 {% block leftcol %}
     <ul>
-        <li id="topic">Категории:</li>
+        <li><span id="topic">Категории:</span></li>
         {% for subcategory in subcategories %}
-            <li class="subcategory"><a href="{% url 'subcategory' category subcategory.url%}">{{ subcategory.name}}</a></li>
+            <li class="subcategory"><a href="{% url 'subcategory' category subcategory.url%}">&gt {{ subcategory.name}}</a></li>
         {% endfor %}
     </ul>
 {% endblock leftcol %}
