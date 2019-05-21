@@ -5,7 +5,7 @@
     <ul>
         <li><span id="topic">Категории:</span></li>
         {% for category in categories %}
-            <li class="category"><a href="{% url 'category' category.url %}">{{ category.name}}</a></li>
+            <li class="category"><a href="{{ category.get_absolute_url }}">{{ category.name}}</a></li>
         {% endfor %}
     </ul>
 {% endblock leftcol %}
@@ -20,7 +20,7 @@
         <div class="product">
             <p class="title">{{ product.name|capfirst }}</p>
             <div class="photo">
-                <img src="{% static 'images' %}/{{ product.image }}.jpg">
+                <img src="">
             </div>
         </div>
     {% endfor %}
