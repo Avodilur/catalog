@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
-from gettext import Catalog
-
 # Create your models here.
-from IPython.core.debugger import Tracer
 from django.db import models
+from django.core.urlresolvers import reverse
+
+
+def address(category):
+    n = Category.objects.get(name=category)
+    if n.parent is not None:
+        return address(Category.objects.get(name=n.parent))+'/'+str(n.url)
+    else:
+        return str(n.url)
 
 
 class Category(models.Model):
@@ -16,6 +21,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('category', args=[address(self.name)])
 
 
 class Product(models.Model):
