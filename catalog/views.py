@@ -2,39 +2,14 @@
 from django.shortcuts import render
 
 # Create your views here.
-from collections import OrderedDict
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from .models import Category
-from .models import Product
-
-
-def example(request):
-    path = request.path.split('/')[:-1]
-    route = {}
-    arr = path[2:]
-    arr.reverse()
-    for item in arr:
-        route.update([(Category.objects.get(slug=item).name, '/'.join(path))])
-        path.pop()
-    return route
+from .models import Category, Product
+from .function.views import navigation, get_objects
 
 
 def category(request, *args, **kwargs):
-    if args:
-        args = args[0].split('/')
-        category = Category.objects.get(slug=args[-1])
-        catalog = Category.objects.get(slug=args[0])
-        if category.parent is not None:
-            categories = Category.objects.filter(parent=category.parent.id)
-        else:
-            categories = Category.objects.filter(parent=None)
-        list_products = Product.objects.filter(category=category)
-    else:
-        categories = Category.objects.filter(parent=None)
-        list_products = Product.objects.all()
+    categories, list_products = get_objects(args, category=Category, product=Product)
     paginator = Paginator(list_products, 12)
     page = request.GET.get('page', 1)
     try:
@@ -43,9 +18,8 @@ def category(request, *args, **kwargs):
         products = paginator.page(1)
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
-    route = example(request)
-    route = OrderedDict(reversed(list(route.items())))
-    # for item in products:
-    #     if item.image is None:
-    #         item.image = category.image or category.parent.image
+    route = navigation(request)
+    for item in products:
+        if not item.image:
+            item.image = Category.objects.get(product=item, parent=None).image
     return render(request, 'catalog/catalog.html', {'categories': categories, 'products': products, 'route': route})

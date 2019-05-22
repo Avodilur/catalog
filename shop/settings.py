@@ -79,12 +79,12 @@ WSGI_APPLICATION = 'shop.wsgi.application'
 
 DATABASES = {
  'default': {
- 'ENGINE': 'django.db.backends.postgresql_psycopg2',
- 'NAME': settings.NAME,
- 'USER': settings.USER,
- 'PASSWORD': settings.PASSWORD,
- 'HOST': 'localhost',
- 'PORT': '',
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': settings.NAME,
+     'USER': settings.USER,
+     'PASSWORD': settings.PASSWORD,
+     'HOST': 'localhost',
+     'PORT': '',
  }
 }
 
@@ -129,6 +129,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'media'),
 ]
 
 MEDIA_URL = '/media/'

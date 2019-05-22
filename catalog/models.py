@@ -2,7 +2,14 @@
 # Create your models here.
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.conf.urls import url
+
+
+def address(category):
+    n = Category.objects.get(name=category)
+    if n.parent is not None:
+        return address(Category.objects.get(name=n.parent)) + '/' + str(n.slug)
+    else:
+        return str(n.slug)
 
 
 class Category(models.Model):
@@ -15,10 +22,10 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        if self.parent is not None:
-            return '/'.join(self.parent.get_absolute_url(), self.slug)
-        else:
+        if self.parent is None:
             return self.slug
+        else:
+            return '/' '/'.join([self.slug])
 
 
 class Product(models.Model):
@@ -31,3 +38,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return self.id
