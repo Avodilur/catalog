@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     # url(r'^$', views.category, name='catalog'),
-    url(r'^(\w+)*[/]?[(d+)]*', views.category, name='category'),
+    url(r'^(\D+)*', views.category, name='category'),
 ]

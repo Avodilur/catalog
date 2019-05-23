@@ -4,14 +4,6 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 
-def address(category):
-    n = Category.objects.get(name=category)
-    if n.parent is not None:
-        return address(Category.objects.get(name=n.parent)) + '/' + str(n.slug)
-    else:
-        return str(n.slug)
-
-
 class Category(models.Model):
     name = models.CharField(max_length=20)
     parent = models.ForeignKey('self', null=True, blank=True)
@@ -23,9 +15,9 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         if self.parent is None:
-            return self.slug
+            return '/catalog/%s' % self.slug
         else:
-            return '/' '/'.join([self.slug])
+            return '%s/%s/' % (self.parent.get_absolute_url(), self.slug)
 
 
 class Product(models.Model):
