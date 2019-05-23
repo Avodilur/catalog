@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # Create your models here.
 from django.db import models
-from django.core.urlresolvers import reverse
 
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
-    parent = models.ForeignKey('self', null=True, blank=True)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='child')
     slug = models.SlugField(max_length=30, null=True)
     image = models.ImageField(upload_to='images/', blank=True)
 
@@ -19,10 +18,15 @@ class Category(models.Model):
         else:
             return '%s/%s/' % (self.parent.get_absolute_url(), self.slug)
 
+    def save(self, *args, **kwargs):
+        if not self.image:
+            self.image = self.parent.image
+        super(Category, self).save(*args, **kwargs)
+
 
 class Product(models.Model):
     name = models.CharField(max_length=20, null=True)
-    category = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category, related_name='products', null=True)
     description = models.CharField(max_length=200, null=True, blank=True)
     image = models.ImageField(upload_to='images/', blank=True)
     count = models.IntegerField(null=True)
@@ -33,3 +37,9 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return self.id
+
+    def get_image(self):
+        if not self.image:
+            return Category.objects.get(products=self.id, parent=None).image
+        else:
+            return self.image

@@ -9,5 +9,16 @@ from .models import Category
 from .models import Product
 
 
-admin.site.register(Category)
-admin.site.register(Product)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug', 'parent', 'image']
+    prepopulated_fields = {'slug': ('name', )}
+
+
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['name', 'count', 'price', 'image']
+    list_filter = ['category', 'count']
+    list_editable = ['count', 'price']
+
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Product, ProductAdmin)

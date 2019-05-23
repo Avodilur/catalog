@@ -1,7 +1,7 @@
 <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-  {% if category.category_set.count %}
+  {% if category.child.count %}
     <ul>
-      {% for child in category.category_set.all %}
+      {% for child in category.child.all %}
         {% with category=child %}
           {% include "catalog/menu.html" %}
         {% endwith %}

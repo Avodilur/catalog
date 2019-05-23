@@ -17,8 +17,5 @@ def category(request, path):
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
     route = navigation(request.path)
-    for item in products:
-        if not item.image:
-            item.image = Category.objects.get(product=item, parent=None).image
     return render(request, 'catalog/catalog.html', {'categories': categories, 'products': products,
                                                     'route': route, 'path': path})
