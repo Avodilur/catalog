@@ -1,5 +1,5 @@
 <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-  {% if category.category_set.count != 0 %}
+  {% if category.category_set.count %}
     <ul>
       {% for child in category.category_set.all %}
         {% with category=child %}
