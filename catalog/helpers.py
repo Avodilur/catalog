@@ -13,8 +13,7 @@ def navigation(path):
 
 
 def get_objects(path):
-    parent_none = Category.objects.filter(parent=None)
-    categories = [(i, list(Category.objects.filter(parent=i.id))) for i in parent_none]
+    categories = Category.objects.filter(parent=None)
     if path is not None:
         path = path.rstrip('/').split('/')
         category = get_object_or_404(Category, slug=path[-1])

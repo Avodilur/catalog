@@ -1,0 +1,11 @@
+<li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+  {% if category.category_set.count != 0 %}
+    <ul>
+      {% for child in category.category_set.all %}
+        {% with category=child %}
+          {% include "catalog/menu.html" %}
+        {% endwith %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+</li>

@@ -22,4 +22,3 @@ def category(request, path):
             item.image = Category.objects.get(product=item, parent=None).image
     return render(request, 'catalog/catalog.html', {'categories': categories, 'products': products,
                                                     'route': route, 'path': path})
-
