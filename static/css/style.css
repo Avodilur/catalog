@@ -59,6 +59,7 @@ a:hover {
     display: block;
     padding: 10px;
     border: 1px solid black;
+    color: black;
 }
 
 #leftcol>ul>li{
@@ -70,6 +71,7 @@ a:hover {
     padding: 10px;
     border: 1px solid black;
     color: #5b80b2;
+    overflow: hidden;
 }
 
 #leftcol>ul>li>ul{

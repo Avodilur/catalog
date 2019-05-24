@@ -26,7 +26,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=20, null=True)
-    category = models.ManyToManyField(Category, related_name='products', null=True)
+    category = models.ManyToManyField(Category, related_name='products')
     description = models.CharField(max_length=200, null=True, blank=True)
     image = models.ImageField(upload_to='images/', blank=True)
     count = models.IntegerField(null=True)
@@ -37,6 +37,11 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return self.id
+
+    def save(self, *args, **kwargs):
+        if not self.image:
+            self.image = self.category.get(parent=None).image
+        super(Product, self).save(*args, **kwargs)
 
     def get_image(self):
         if not self.image:

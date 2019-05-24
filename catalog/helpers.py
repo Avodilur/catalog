@@ -17,6 +17,8 @@ def get_objects(path):
     if path is not None:
         path = path.rstrip('/').split('/')
         category = get_object_or_404(Category, slug=path[-1])
+        categories = Category.objects.get(slug=path[-1]).child.all()
         return categories, Product.objects.filter(category=category)
     else:
         return categories, Product.objects.all()
+
