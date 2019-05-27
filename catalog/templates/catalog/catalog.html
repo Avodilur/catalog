@@ -1,8 +1,9 @@
 {% extends "catalog/base.html" %}
 {% load staticfiles %}
 
+
 {% block leftcol %}
-    <ul>
+    <ul class="menu">
       <li><a id='topic' href="/catalog">Категории:</a></li>
       {% for category in categories %}
         {% include "catalog/menu.html" %}
@@ -20,7 +21,7 @@
         <div class="product">
             <p class="title"><a href={{ product.get_absolute_url }}>{{ product.name|capfirst }}</a></p>
             <div class="photo">
-                <img src="{% static '' %}{{ product.get_image }}">
+                <img src="{% static '' %}{{ product.image }}" alt="">
             </div>
         </div>
     {% endfor %}

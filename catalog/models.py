@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 # Create your models here.
 from django.db import models
 
@@ -18,11 +19,6 @@ class Category(models.Model):
         else:
             return '%s/%s/' % (self.parent.get_absolute_url(), self.slug)
 
-    def save(self, *args, **kwargs):
-        if not self.image:
-            self.image = self.parent.image
-        super(Category, self).save(*args, **kwargs)
-
 
 class Product(models.Model):
     name = models.CharField(max_length=20, null=True)
@@ -36,12 +32,7 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return self.id
-
-    def save(self, *args, **kwargs):
-        if not self.image:
-            self.image = self.category.get(parent=None).image
-        super(Product, self).save(*args, **kwargs)
+        return '%sproduct/%s' % (self.category.last().get_absolute_url(), self.id)
 
     def get_image(self):
         if not self.image:

@@ -3,6 +3,6 @@ from . import views
 
 
 urlpatterns = [
-    # url(r'^$', views.category, name='catalog'),
-    url(r'^(\D+)*', views.category, name='category'),
+    url(r'^(\D+)/product/(\d+)$', views.product),
+    url(r'^(\S+)*', views.category, name='category'),
 ]

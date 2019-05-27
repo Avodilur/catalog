@@ -1,0 +1,20 @@
+{% extends "catalog/base.html" %}
+{% load staticfiles %}
+
+{% block leftcol %}
+    <ul>
+      <li><a id='topic' href="/catalog">Категории:</a></li>
+      {% for category in categories %}
+        {% include "catalog/menu.html" %}
+      {% endfor %}
+    </ul>
+{% endblock leftcol %}
+
+{% block content %}
+    <span class="name"><h3>{{ product.name }}</h3></span>
+    <div class="product-photo">
+        <img src="{% static '' %}{{ product.image }}">
+    </div>
+    <span class="price">{{ product.price }}</span>
+    <span class="description">Описание: {{ product.description }}</span>
+{% endblock %}

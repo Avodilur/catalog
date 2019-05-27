@@ -54,6 +54,10 @@ a:hover {
 }
 
 /*Категории товаров*/
+.menu.open ul {
+      display: block;
+    }
+
 #topic{
     font: italic 100% Arial;
     display: block;
@@ -77,10 +81,9 @@ a:hover {
 #leftcol>ul>li>ul{
     display: none;
     overflow: hidden;
-
 }
 
-#leftcol>ul>li:hover>ul {
+#leftcol>ul>li:hover>ul{
     display: block;
 }
 
@@ -95,7 +98,6 @@ a:hover {
     border: 1px solid black;
     color: black;
     text-decoration: none;
-
 }
 
 /*Хлебные крошки*/
@@ -111,20 +113,55 @@ a:hover {
     margin: 0 20px 20px 0;
     box-sizing: border-box;
     padding: 10px;
-    width: 226px;
+    width: 200px;
     text-align: center;
 }
 
 .product>.photo {
     width: 153px;
-    height: 137px;
+    height: 120px;
     margin: 0 auto 10px;
 }
 
 .product>.photo>img {
     width: auto;
-    height: 137px;
+    height: 100px;
 }
+
+/*Страница продукта*/
+.product-photo {
+    background-color: white;
+    float: left;
+    margin: 20px 20px 20px 0;
+    box-sizing: border-box;
+    width: 400px;
+    text-align: left;
+}
+
+.product-photo>img {
+    width: auto;
+    height: 300px;
+}
+
+.product-photo:hover img {
+    height: 500px;
+    width: auto;
+}
+
+.description {
+    margin-right: 20px;
+    display: block;
+    float: left;
+}
+
+.price {
+    float: right;
+    margin-right: 50px;
+}
+/*.product-photo {position: relative; cursor:pointer; display: inline-block;}*/
+/*.product-photo img + img {position:absolute; left: 0; top:0; z-index:100; display: none;}*/
+/*.product-photo:hover img + img {display: block;}*/
+
 
 /*Переход по страницам*/
 #pages {
