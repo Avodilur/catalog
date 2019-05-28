@@ -15,9 +15,9 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'count', 'price', 'image']
+    list_display = ['name', 'category', 'count', 'price', 'image']
     list_filter = ['category', 'count']
-    list_editable = ['count', 'price']
+    list_editable = ['category', 'count', 'price']
 
 
 admin.site.register(Category, CategoryAdmin)

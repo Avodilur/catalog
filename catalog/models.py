@@ -17,12 +17,12 @@ class Category(models.Model):
         if self.parent is None:
             return '/catalog/%s' % self.slug
         else:
-            return '%s/%s/' % (self.parent.get_absolute_url(), self.slug)
+            return '%s/%s' % (self.parent.get_absolute_url(), self.slug)
 
 
 class Product(models.Model):
     name = models.CharField(max_length=20, null=True)
-    category = models.ManyToManyField(Category, related_name='products')
+    category = models.ForeignKey(Category, related_name='products', null=True)
     description = models.CharField(max_length=200, null=True, blank=True)
     image = models.ImageField(upload_to='images/', blank=True)
     count = models.IntegerField(null=True)
@@ -32,7 +32,7 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return '%sproduct/%s' % (self.category.last().get_absolute_url(), self.id)
+        return '%s/product/%s' % (self.category.get_absolute_url(), self.id)
 
     def get_image(self):
         if not self.image:

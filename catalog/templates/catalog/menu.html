@@ -1,6 +1,6 @@
 <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
   {% if category.child.count %}
-    <ul>
+    <ul class="submenu">
       {% for child in category.child.all %}
         {% with category=child %}
           {% include "catalog/menu.html" %}

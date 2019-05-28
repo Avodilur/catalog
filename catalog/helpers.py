@@ -1,33 +1,40 @@
 from catalog.models import Category, Product
-from django.shortcuts import get_object_or_404
 from django.http import Http404
 
 
 def navigation(path):
-    category = Category.objects.all()
+    categories = Category.objects.all()
     path = path.rstrip('/').split('/')
     route = []
-    arr = reversed(path[2:])
-    try:
-        for item in arr:
-            route += ([(category.get(slug=item), '/'.join(path))])
-            path.pop()
-        return list(reversed(route))
-    except Category.DoesNotExist:
-        raise Http404()
+    slugs = path[2:]
+    parent = None
+    for slug in slugs:
+        for category in categories:
+            if slug == category.slug and category.parent == parent:
+                parent = category
+                route += ([(category, category.get_absolute_url())])
+    if len(route) == len(slugs):
+        return route
+    else:
+        raise Http404
 
 
 def get_objects(path):
-    product = Product.objects.all()
+    products = Product.objects.all()
     if path is not None:
         path = path.rstrip('/').split('/')[-1]
-        product = product.filter(category__slug=path)
-    return product
+        list_categories = Category.objects.filter(parent__slug=path)
+        if not list_categories:
+            products = products.filter(category__slug=path)
+        else:
+            products = products.filter(category__in=list_categories)
+    return products
 
 
 def get_product(path, id):
     try:
-        product = get_object_or_404(Product, id=id)
+        product = Product.objects.get(id=id)
         return product
     except Product.DoesNotExist:
         raise Http404()
+
