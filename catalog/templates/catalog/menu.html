@@ -1,7 +1,9 @@
+{% load tags %}
+
 <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-  {% if category.child.count %}
+  {% if child_count|hash:category%}
     <ul class="submenu">
-      {% for child in category.child.all %}
+      {% for child in child_count|hash:category %}
         {% with category=child %}
           {% include "catalog/menu.html" %}
         {% endwith %}

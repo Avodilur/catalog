@@ -58,6 +58,10 @@ a:hover {
     display: none;
 }
 
+.open {
+    display: block;
+}
+
 li:hover>.submenu {
     display: block;
 }

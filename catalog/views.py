@@ -19,11 +19,13 @@ def category(request, path):
         products = paginator.page(1)
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
-    print(len(connection.queries) - before)
+    print 'category:', len(connection.queries) - before
     return render(request, 'catalog/catalog.html', {'products': products,
-                                                    'route': route, 'path': path})
+                                                    'route': route})
 
 
 def product(request, path, id):
+    before = len(connection.queries)
     product = get_product(path, id)
+    print 'product:', len(connection.queries) - before
     return render(request, 'catalog/product.html', {'product': product})
