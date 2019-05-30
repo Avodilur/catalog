@@ -17,6 +17,7 @@
         <a href="{{ value }}">/ {{ key.name }}</a>
     {% endfor %}
     </span>
+    {% if products %}
     {% for product in products %}
         <div class="product">
             <p class="title"><a href={{ product.get_absolute_url }}>{{ product.name|capfirst }}</a></p>
@@ -33,4 +34,5 @@
             <a href="?page={{ products.next_page_number }}">Вперед&gt&gt&gt</a>
         {% endif %}
     </div>
+    {% else %} <p style="padding-top: 5px">Товаров не найдено</p> {% endif %}
 {% endblock content %}

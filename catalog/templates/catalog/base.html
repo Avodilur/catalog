@@ -18,6 +18,12 @@
                 {% block leftcol %}{% endblock leftcol %}
             </div>
             <div id="content">
+                {% block search %}
+                    <form id="search">
+                        <p><input type="search" name="search_product">
+                            <input type="submit" value="Найти"></p>
+                    </form>
+                {% endblock search %}
                 {% block content %}{% endblock content %}
             </div>
         </div>

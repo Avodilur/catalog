@@ -100,6 +100,15 @@ li:hover>.submenu {
     text-decoration: none;
 }
 
+/*Поиск по каталогу*/
+#search {
+    padding: 10px;
+}
+
+#search>p>input:first-child {
+    width: 80%;
+}
+
 /*Хлебные крошки*/
 #address{
     display: block;
@@ -155,13 +164,12 @@ li:hover>.submenu {
     margin-left: -350px;
     z-index: 999;
     top: 100px;
-    border: 1px solid #D4DEE8;
 }
 
 #big_image img {
     width: auto;
-    max-height: 1000px;
-    max-width: 1000px;
+    max-height: 80%;
+    max-width: 80%;
 }
 
 .description {
