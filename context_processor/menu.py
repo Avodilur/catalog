@@ -9,6 +9,8 @@ def menu(request):
     slugs = path[2:]
     if 'product' in slugs:
         slugs = slugs[:-2]
+    elif 'search' in slugs:
+        slugs = slugs[:-1]
     for slug in slugs:
         for category in categories:
             if slug == category.slug and category.parent == parent:

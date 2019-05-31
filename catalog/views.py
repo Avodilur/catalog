@@ -16,9 +16,15 @@ def category(request, path):
         products = paginator.page(1)
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
-    return render(request, 'catalog/catalog.html', {'products': products})
+    return render(request, 'catalog/catalog.html', {'products': products, 'path': request.path.rstrip('/')})
 
 
 def product(request, path, id):
     product = get_product(path, id)
     return render(request, 'catalog/product.html', {'product': product})
+
+
+def search(request, path):
+    q = request.GET.get('q', '')
+    products = get_objects(request, path, q)
+    return render(request, 'catalog/catalog.html', {'products': products, 'path': request.path.replace('/search', '')})

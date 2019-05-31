@@ -6,8 +6,7 @@
     <title>{% block title %}Электронный каталог{% endblock title %}</title>
     <link rel="stylesheet" href="{% static "css/style.css" %}">
     <script src="{% static "scripts/jquery.min.js" %}"></script>
-    <script src="{% static "scripts/zoom_image.js" %}"></script>
-    <script src="{% static "scripts/menu.js" %}"></script>
+    <script src="{% static "scripts/scripts.js" %}"></script>
 <body>
     <div id="wrap">
         <div id="header">
@@ -19,8 +18,8 @@
             </div>
             <div id="content">
                 {% block search %}
-                    <form id="search">
-                        <p><input type="search" name="search_product">
+                    <form id="search" action="{{ path }}/search">
+                        <p><input type="search" name="q">
                             <input type="submit" value="Найти"></p>
                     </form>
                 {% endblock search %}
