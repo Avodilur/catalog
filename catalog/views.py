@@ -7,7 +7,6 @@ from catalog.helpers import get_objects, get_product
 
 
 def category(request, path):
-    print path
     list_products, route = get_objects(path)
     paginator = Paginator(list_products, 12)
     page = request.GET.get('page', 1)
@@ -17,7 +16,7 @@ def category(request, path):
         products = paginator.page(1)
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
-    return render(request, 'catalog/catalog.html', {'products': products, 'path': request.path.rstrip('/'), 'route': route})
+    return render(request, 'catalog/catalog.html', {'products': products, 'route': route})
 
 
 def product(request, path, id):
@@ -25,4 +24,7 @@ def product(request, path, id):
     return render(request, 'catalog/product.html', {'product': product, 'route': route})
 
 
-
+def search(request):
+    q = request.GET.get('q', '')
+    products, route = get_objects(q=q)
+    return render(request, 'catalog/catalog.html', {'products': products, 'route': route})

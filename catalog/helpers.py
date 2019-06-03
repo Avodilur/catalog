@@ -2,11 +2,9 @@ from catalog.models import Category, Product
 from django.http import Http404
 
 
-categories = Category.objects.all()
-
-
 def tree_categories():
     child_count = {}
+    categories = Category.objects.all()
     for category in categories:
         child_count[category] = []
     for category in categories:
@@ -32,7 +30,7 @@ def get_categories(category, child_count):
     return categories
 
 
-def get_objects(path):
+def get_objects(path=None, q=''):
     products = Product.objects.all()
     child_count = tree_categories()
     route = []
@@ -40,25 +38,25 @@ def get_objects(path):
         route, category = check_404(path)
         list_categories = get_categories(category, child_count)
         products = products.filter(category__in=list_categories)
-    return products, route
+    return products.filter(name__icontains=q), route
 
 
 def check_404(path):
+    category = path.rstrip('/').split('/')[-1]
     try:
-        category = path.rstrip('/').split('/')[-1]
-        category = categories.get(slug=category)
-        route = breadcrumb(category)
-        if path.rstrip('/') != '/'.join([category.slug for category in route]):
-            raise Http404
-        return route, category
+        category = Category.objects.get(slug=category)
     except Category.DoesNotExist:
         raise Http404
+    route = breadcrumb(category)
+    if path.rstrip('/') != '/'.join([category.slug for category in route]):
+        raise Http404
+    return route, category
 
 
-def get_product(path, id):
+def get_product(path, pk):
+    route, category = check_404(path)
     try:
-        route, category = check_404(path)
-        product = Product.objects.get(id=id)
-        return product, route
+        product = Product.objects.get(pk=pk)
     except Product.DoesNotExist:
         raise Http404()
+    return product, route
