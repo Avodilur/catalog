@@ -13,8 +13,8 @@
 
 {% block content %}
     <span id="address">
-    {% for key, value in route %}
-        <a href="{{ value }}">/ {{ key.name }}</a>
+    {% for elem in route %}
+        <a href="{{ elem.get_absolute_url }}">/ {{ elem.name }}</a>
     {% endfor %}
     </span>
     {% if products %}

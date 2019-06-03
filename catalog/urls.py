@@ -3,7 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^(\S+)*search', views.search, name='search'),
+    # url(r'^(\S+)*search', views.search, name='search'),
     url(r'^(\D+)/product/(\d+)$', views.product),
     url(r'^(\S+)*', views.category, name='category'),
 ]

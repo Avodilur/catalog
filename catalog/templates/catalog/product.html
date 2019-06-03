@@ -12,6 +12,11 @@
 
 {% block search %}{% endblock search %}
 {% block content %}
+    <span id="address">
+        {% for elem in route %}
+            <a href="{{ elem.get_absolute_url }}">/ {{ elem.name }}</a>
+        {% endfor %}
+    </span>
     <span class="name"><h3>{{ product.name }}</h3></span>
     <div class="product-photo">
         <img src="{% static '' %}{{ product.image }}">
