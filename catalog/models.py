@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 # Create your models here.
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class Category(models.Model):
@@ -18,6 +19,13 @@ class Category(models.Model):
             return '/catalog/%s' % self.slug
         else:
             return '%s/%s' % (self.parent.get_absolute_url(), self.slug)
+
+    def clean(self):
+        try:
+            if self.parent.parent.parent.parent:
+                raise ValidationError('')
+        except AttributeError:
+            pass
 
 
 class Product(models.Model):
