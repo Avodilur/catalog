@@ -28,10 +28,10 @@
     {% endfor %}
     <div id="pages">
         {% if products.has_previous %}
-            <a href="?page={{ products.previous_page_number }}">&lt&lt&ltНазад</a>
+            <a href="?{% if q %}q={{ q }}&{% endif %}page={{ products.previous_page_number }}">&lt&lt&ltНазад</a>
         {% endif %}
         {% if products.has_next %}
-            <a href="?page={{ products.next_page_number }}">Вперед&gt&gt&gt</a>
+            <a href="?{% if q %}q={{ q }}&{% endif %}page={{ products.next_page_number }}">Вперед&gt&gt&gt</a>
         {% endif %}
     </div>
     {% else %} <p style="padding-top: 5px">Товаров не найдено</p> {% endif %}

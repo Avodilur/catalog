@@ -6,6 +6,9 @@
     <title>{% block title %}Электронный каталог{% endblock title %}</title>
     <link rel="stylesheet" href="{% static "css/style.css" %}">
     <script src="{% static "scripts/jquery.min.js" %}"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="{% static "scripts/scripts.js" %}"></script>
 <body>
     <div id="wrap">
@@ -18,10 +21,12 @@
             </div>
             <div id="content">
                 {% block search %}
-                    <form id="search" action="/catalog/search">
-                        <p><input type="search" name="q">
-                            <input type="submit" value="Найти"></p>
+                    <div id="search_products">
+                        <form id="search" action="{% url 'search' %}">
+                            <p><input type="search" name="q" value={{ q }}>
+                                <input type="submit" value="Найти"></p>
                     </form>
+                    </div>
                 {% endblock search %}
                 {% block content %}{% endblock content %}
             </div>

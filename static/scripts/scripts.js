@@ -15,4 +15,12 @@ $(document).ready(function () {
             $(this).parent().parents('.submenu').addClass('open');
         }
     })
-})
+});
+
+$(document).ready(function(){
+    $('#search_products input[name="q"]').autocomplete({
+        source: '/catalog/search/',
+        minLength: 2,
+        appendTo: "#search_products"
+    });
+});

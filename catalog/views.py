@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 # Create your views here.
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
-from catalog.helpers import get_objects, get_product
+from django.http import JsonResponse
+from catalog.helpers import get_objects, get_product, pagination, tree_categories
+from catalog.models import Product
+
+
+products_name = list(Product.objects.all().values_list('name', flat=True))
 
 
 def category(request, path):
     list_products, route = get_objects(path)
-    paginator = Paginator(list_products, 12)
     page = request.GET.get('page', 1)
-    try:
-        products = paginator.page(page)
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)
+    products = pagination(list_products, page)
     return render(request, 'catalog/catalog.html', {'products': products, 'route': route})
 
 
@@ -25,6 +23,13 @@ def product(request, path, id):
 
 
 def search(request):
-    q = request.GET.get('q', '')
-    products, route = get_objects(q=q)
-    return render(request, 'catalog/catalog.html', {'products': products, 'route': route})
+    if request.is_ajax():
+        q = request.GET.get('term', '').lower()
+        results = [s for s in products_name if q in s.lower()]
+        return JsonResponse(list(results), safe=False)
+    else:
+        q = request.GET.get('q', '')
+        page = request.GET.get('page', 1)
+        products, route = get_objects(q=q)
+        products = pagination(products, page)
+        return render(request, 'catalog/catalog.html', {'products': products, 'route': route, 'q': q})

@@ -1,5 +1,6 @@
 from catalog.models import Category, Product
 from django.http import Http404
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def tree_categories():
@@ -60,3 +61,14 @@ def get_product(path, pk):
     except Product.DoesNotExist:
         raise Http404()
     return product, route
+
+
+def pagination(list_products, page):
+    paginator = Paginator(list_products, 12)
+    try:
+        list_products = paginator.page(page)
+    except PageNotAnInteger:
+        list_products = paginator.page(1)
+    except EmptyPage:
+        list_products = paginator.page(paginator.num_pages)
+    return list_products

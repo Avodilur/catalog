@@ -11,4 +11,3 @@ def menu(request):
             child_count[category.parent].append(category)
     categories_parent = [category for category in categories if category.parent is None]
     return {'categories': categories_parent, 'child_count': child_count}
-
