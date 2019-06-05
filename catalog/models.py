@@ -10,6 +10,7 @@ class Category(models.Model):
     parent = models.ForeignKey('self', null=True, blank=True, related_name='child')
     slug = models.SlugField(max_length=30, null=True)
     image = models.ImageField(upload_to='images/', blank=True)
+    level = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -21,11 +22,8 @@ class Category(models.Model):
             return '%s/%s' % (self.parent.get_absolute_url(), self.slug)
 
     def clean(self):
-        try:
-            if self.parent.parent.parent.parent:
-                raise ValidationError('')
-        except AttributeError:
-            pass
+        if self.level == 3:
+            raise ValidationError('')
 
 
 class Product(models.Model):
