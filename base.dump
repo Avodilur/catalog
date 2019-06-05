@@ -1,0 +1,1437 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.8 (Ubuntu 10.8-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.8 (Ubuntu 10.8-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(80) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO admin;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO admin;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO admin;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO admin;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO admin;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO admin;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.auth_user OWNER TO admin;
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_groups OWNER TO admin;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_user_groups_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO admin;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_id_seq OWNER TO admin;
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_user_permissions OWNER TO admin;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO admin;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
+
+
+--
+-- Name: catalog_category; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.catalog_category (
+    id integer NOT NULL,
+    name character varying(20) NOT NULL,
+    parent_id integer,
+    slug character varying(30),
+    image character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.catalog_category OWNER TO admin;
+
+--
+-- Name: catalog_category_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.catalog_category_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.catalog_category_id_seq OWNER TO admin;
+
+--
+-- Name: catalog_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.catalog_category_id_seq OWNED BY public.catalog_category.id;
+
+
+--
+-- Name: catalog_product; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.catalog_product (
+    id integer NOT NULL,
+    description character varying(200),
+    count integer,
+    name character varying(20),
+    price integer,
+    image character varying(100) NOT NULL,
+    category_id integer
+);
+
+
+ALTER TABLE public.catalog_product OWNER TO admin;
+
+--
+-- Name: catalog_product_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.catalog_product_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.catalog_product_id_seq OWNER TO admin;
+
+--
+-- Name: catalog_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.catalog_product_id_seq OWNED BY public.catalog_product.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO admin;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO admin;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO admin;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO admin;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO admin;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO admin;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO admin;
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: catalog_category id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.catalog_category ALTER COLUMN id SET DEFAULT nextval('public.catalog_category_id_seq'::regclass);
+
+
+--
+-- Name: catalog_product id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.catalog_product ALTER COLUMN id SET DEFAULT nextval('public.catalog_product_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can add group	2	add_group
+5	Can change group	2	change_group
+6	Can delete group	2	delete_group
+7	Can add permission	3	add_permission
+8	Can change permission	3	change_permission
+9	Can delete permission	3	delete_permission
+10	Can add user	4	add_user
+11	Can change user	4	change_user
+12	Can delete user	4	delete_user
+13	Can add content type	5	add_contenttype
+14	Can change content type	5	change_contenttype
+15	Can delete content type	5	delete_contenttype
+16	Can add session	6	add_session
+17	Can change session	6	change_session
+18	Can delete session	6	delete_session
+19	Can add category	7	add_category
+20	Can change category	7	change_category
+21	Can delete category	7	delete_category
+22	Can add product	8	add_product
+23	Can change product	8	change_product
+24	Can delete product	8	delete_product
+\.
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+1	pbkdf2_sha256$36000$qeAFnUNL69sw$wd4YpuMsXkc3p1eI0PgdD8YFfF1vmCOiLPYeIG4oI9U=	2019-06-04 13:04:39.00751+07	t	admin			admin@example.com	t	t	2019-05-17 10:16:52.102988+07
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: catalog_category; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.catalog_category (id, name, parent_id, slug, image) FROM stdin;
+18	iPhone	9	iphone	
+16	Honor	9	honor	
+15	Huawei	9	huawei	
+14	Samsung	7	samsung	
+13	BenQ	7	benq	
+11	Acer	7	acer	
+10	Keyboard	\N	keyboard	
+7	Monitor	\N	monitor	images/monitor_54oAgV4.jpg
+8	CPU	\N	cpu	images/cpu_67UjStl.jpg
+9	Phone	\N	phone	images/phone_2PbM0nG.jpg
+12	LG	7	lgtv	
+25	hd	14	hd	
+26	sd	14	sd	
+\.
+
+
+--
+-- Data for Name: catalog_product; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.catalog_product (id, description, count, name, price, image, category_id) FROM stdin;
+30	\N	2	Huawei_2	12000	images/phone_2PbM0nG.jpg	15
+29	\N	2	Huawei_1	12000	images/phone_2PbM0nG.jpg	15
+28	\N	6	iPhone_5	12000	images/phone_2PbM0nG.jpg	18
+27	\N	6	iPhone_4	12000	images/phone_2PbM0nG.jpg	18
+26	\N	4	iPhone_3	12000	images/phone_2PbM0nG.jpg	18
+25	\N	4	iPhone_2	10000	images/phone_2PbM0nG.jpg	18
+24	\N	5	iPhone_1	5000	images/phone_2PbM0nG.jpg	18
+23	\N	3	Honor_5	10000	images/phone_2PbM0nG.jpg	16
+22	\N	5	Honor_4	7000	images/phone_2PbM0nG.jpg	16
+21	\N	1	Honor_3	5000	images/phone_2PbM0nG.jpg	16
+20	\N	14	Honor_2	2000	images/phone_2PbM0nG.jpg	16
+19	\N	4	Honor_1	5000	images/phone_2PbM0nG.jpg	16
+18	\N	5	LG_4	2000	images/monitor_54oAgV4.jpg	12
+17	\N	5	LG_3	1500	images/monitor_54oAgV4.jpg	12
+16	\N	2	BenQ_3	1000	images/monitor_54oAgV4.jpg	13
+15	\N	5	BenQ_2	2500	images/monitor_54oAgV4.jpg	13
+14	\N	3	Acer_4	2000	images/monitor_54oAgV4.jpg	11
+13	\N	4	Acer_3	2500	images/monitor_54oAgV4.jpg	11
+12	\N	4	Acer_2	3000	images/monitor_54oAgV4.jpg	11
+11	Монитор Acer KA190HQb [UM.XX0EE.001] идеален для создания рабочего стационарного компьютера. Ведь он обеспечит вам хорошие характеристики качества картинки на широком экране в 18.5 дюймов.	5	Acer_1	5000	images/monitor_54oAgV4.jpg	11
+10	\N	6	Samsung_3	3000	images/monitor_54oAgV4.jpg	14
+9	\N	5	Samsung_2	1500	images/monitor_54oAgV4.jpg	14
+8	\N	1	Samsung_1	1000	images/monitor_54oAgV4.jpg	14
+7	\N	4	BenQ_1	1500	images/monitor_54oAgV4.jpg	13
+6	\N	10	LG_2	2000	images/monitor_54oAgV4.jpg	12
+5	\N	5	LG_1	1000	images/monitor_54oAgV4.jpg	12
+31	\N	5	Huawei_3	12000	images/phone_2PbM0nG_LXW3bXN.jpg	15
+33	\N	1	hd_1	5000	images/monitor_38CW5nX.jpg	25
+34	\N	4	hd_2	4000	images/monitor_Qy8coOf.jpg	25
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2019-05-17 11:02:33.605047+07	6	monitor	1	[{"added": {}}]	7	1
+2	2019-05-17 11:09:37.5289+07	3	cpu	2	[{"changed": {"fields": ["name", "url", "image"]}}]	7	1
+3	2019-05-17 11:10:48.506882+07	1	intel	2	[{"changed": {"fields": ["name", "parent", "url", "image"]}}]	7	1
+4	2019-05-17 13:12:08.723241+07	1	monitor_1	1	[{"added": {}}]	8	1
+5	2019-05-17 13:12:30.690615+07	2	monitor_2	1	[{"added": {}}]	8	1
+6	2019-05-17 13:12:54.236419+07	3	cpu_1	1	[{"added": {}}]	8	1
+7	2019-05-17 13:13:17.19669+07	4	cpu_intel_1	1	[{"added": {}}]	8	1
+8	2019-05-17 16:58:48.048681+07	1	example	2	[{"changed": {"fields": ["name", "parent", "url"]}}]	7	1
+9	2019-05-17 17:22:56.618275+07	1	intel	2	[{"changed": {"fields": ["name", "url"]}}]	7	1
+10	2019-05-20 11:24:44.664845+07	6	monitor	3		7	1
+11	2019-05-20 11:24:44.668895+07	3	cpu	3		7	1
+12	2019-05-20 11:24:44.670404+07	1	intel	3		7	1
+13	2019-05-20 11:24:53.915353+07	4	cpu_intel_1	3		8	1
+14	2019-05-20 11:24:53.91758+07	3	cpu_1	3		8	1
+15	2019-05-20 11:24:53.918977+07	2	monitor_2	3		8	1
+16	2019-05-20 11:24:53.920322+07	1	monitor_1	3		8	1
+17	2019-05-20 11:27:42.485596+07	7	monitor	1	[{"added": {}}]	7	1
+18	2019-05-20 11:28:16.623241+07	8	cpu	1	[{"added": {}}]	7	1
+19	2019-05-20 11:28:30.90838+07	9	phone	1	[{"added": {}}]	7	1
+20	2019-05-20 11:29:16.058259+07	10	keyboard	1	[{"added": {}}]	7	1
+21	2019-05-20 11:31:26.087614+07	11	Acer	1	[{"added": {}}]	7	1
+22	2019-05-20 11:31:37.777494+07	12	LG	1	[{"added": {}}]	7	1
+23	2019-05-20 11:32:02.148245+07	13	BenQ	1	[{"added": {}}]	7	1
+24	2019-05-20 11:32:30.969577+07	14	Samsung	1	[{"added": {}}]	7	1
+25	2019-05-20 11:32:43.295391+07	11	Acer	2	[{"changed": {"fields": ["url"]}}]	7	1
+26	2019-05-20 11:33:39.569928+07	15	Huawei	1	[{"added": {}}]	7	1
+27	2019-05-20 11:33:52.471729+07	16	Honor	1	[{"added": {}}]	7	1
+28	2019-05-20 11:34:14.820007+07	17	Samsung	1	[{"added": {}}]	7	1
+29	2019-05-20 11:34:48.029671+07	18	iPhone	1	[{"added": {}}]	7	1
+30	2019-05-20 11:34:55.947213+07	7	Monitor	2	[{"changed": {"fields": ["name"]}}]	7	1
+31	2019-05-20 11:35:01.699694+07	8	CPU	2	[{"changed": {"fields": ["name"]}}]	7	1
+32	2019-05-20 11:35:07.648491+07	9	Phone	2	[{"changed": {"fields": ["name"]}}]	7	1
+33	2019-05-20 11:35:13.906634+07	10	Keyboard	2	[{"changed": {"fields": ["name"]}}]	7	1
+34	2019-05-20 11:36:10.621187+07	5	LG_1	1	[{"added": {}}]	8	1
+35	2019-05-20 11:37:05.527898+07	17	Samsung	3		7	1
+36	2019-05-20 11:37:57.621972+07	6	LG_2	1	[{"added": {}}]	8	1
+37	2019-05-20 11:38:14.217794+07	7	BenQ_1	1	[{"added": {}}]	8	1
+38	2019-05-20 11:39:04.432472+07	8	Samsung_1	1	[{"added": {}}]	8	1
+39	2019-05-20 11:39:21.999956+07	9	Samsung_2	1	[{"added": {}}]	8	1
+40	2019-05-20 11:39:47.633905+07	10	Samsung_3	1	[{"added": {}}]	8	1
+41	2019-05-20 11:40:08.983303+07	11	Acer_1	1	[{"added": {}}]	8	1
+42	2019-05-20 11:40:25.07729+07	12	Acer_2	1	[{"added": {}}]	8	1
+43	2019-05-20 11:40:38.124645+07	13	Acer_3	1	[{"added": {}}]	8	1
+44	2019-05-20 11:40:54.976555+07	14	Acer_4	1	[{"added": {}}]	8	1
+45	2019-05-20 11:41:16.345043+07	15	BenQ_2	1	[{"added": {}}]	8	1
+46	2019-05-20 11:41:42.138556+07	16	BenQ_3	1	[{"added": {}}]	8	1
+47	2019-05-20 11:41:55.9382+07	17	LG_3	1	[{"added": {}}]	8	1
+48	2019-05-20 11:42:15.455207+07	18	LG_4	1	[{"added": {}}]	8	1
+49	2019-05-20 12:39:38.757892+07	19	Honor_1	1	[{"added": {}}]	8	1
+50	2019-05-20 12:39:57.015027+07	20	Honor_2	1	[{"added": {}}]	8	1
+51	2019-05-20 12:47:44.438375+07	21	Honor_3	1	[{"added": {}}]	8	1
+52	2019-05-20 12:47:55.822536+07	22	Honor_4	1	[{"added": {}}]	8	1
+53	2019-05-20 12:48:07.950488+07	23	Honor_5	1	[{"added": {}}]	8	1
+54	2019-05-20 12:48:24.937169+07	24	iPhone_1	1	[{"added": {}}]	8	1
+55	2019-05-20 12:48:34.440102+07	25	iPhone_2	1	[{"added": {}}]	8	1
+56	2019-05-20 12:48:44.63212+07	26	iPhone_3	1	[{"added": {}}]	8	1
+57	2019-05-20 12:48:57.511777+07	27	iPhone_4	1	[{"added": {}}]	8	1
+58	2019-05-20 12:49:09.289903+07	28	iPhone_5	1	[{"added": {}}]	8	1
+59	2019-05-20 12:49:30.038857+07	29	Huawei_1	1	[{"added": {}}]	8	1
+60	2019-05-20 12:49:43.522708+07	30	Huawei_2	1	[{"added": {}}]	8	1
+61	2019-05-20 12:49:57.177018+07	31	Huawei_3	1	[{"added": {}}]	8	1
+62	2019-05-21 15:34:50.265832+07	7	Monitor	2	[{"changed": {"fields": ["slug"]}}]	7	1
+63	2019-05-21 15:34:56.981312+07	18	iPhone	2	[{"changed": {"fields": ["slug"]}}]	7	1
+64	2019-05-21 15:35:08.757255+07	16	Honor	2	[{"changed": {"fields": ["slug"]}}]	7	1
+65	2019-05-21 15:35:14.661174+07	15	Huawei	2	[{"changed": {"fields": ["slug"]}}]	7	1
+66	2019-05-21 15:35:21.69919+07	14	Samsung	2	[{"changed": {"fields": ["slug"]}}]	7	1
+67	2019-05-21 15:35:27.459554+07	13	BenQ	2	[{"changed": {"fields": ["slug"]}}]	7	1
+68	2019-05-21 15:35:31.739423+07	12	LG	2	[{"changed": {"fields": ["slug"]}}]	7	1
+69	2019-05-21 15:35:37.156282+07	11	Acer	2	[{"changed": {"fields": ["slug"]}}]	7	1
+70	2019-05-21 15:35:42.777428+07	10	Keyboard	2	[{"changed": {"fields": ["slug"]}}]	7	1
+71	2019-05-21 15:35:47.404421+07	9	Phone	2	[{"changed": {"fields": ["slug"]}}]	7	1
+72	2019-05-21 15:35:54.862986+07	8	CPU	2	[{"changed": {"fields": ["slug"]}}]	7	1
+73	2019-05-21 16:56:10.613364+07	7	Monitor	2	[{"changed": {"fields": ["image"]}}]	7	1
+74	2019-05-21 16:56:23.087949+07	8	CPU	2	[{"changed": {"fields": ["image"]}}]	7	1
+75	2019-05-21 16:56:36.710416+07	9	Phone	2	[{"changed": {"fields": ["image"]}}]	7	1
+76	2019-05-22 13:08:56.327245+07	12	LG	2	[{"changed": {"fields": ["slug"]}}]	7	1
+77	2019-05-23 15:08:52.967541+07	5	LG_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+78	2019-05-23 15:12:31.531804+07	31	Huawei_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+79	2019-05-23 15:12:31.537109+07	30	Huawei_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+80	2019-05-23 15:12:31.539804+07	29	Huawei_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+81	2019-05-23 15:12:31.54267+07	28	iPhone_5	2	[{"changed": {"fields": ["category"]}}]	8	1
+82	2019-05-23 15:12:31.544944+07	27	iPhone_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+83	2019-05-23 15:12:31.548149+07	26	iPhone_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+84	2019-05-23 15:12:31.550693+07	25	iPhone_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+85	2019-05-23 15:12:31.552758+07	24	iPhone_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+86	2019-05-23 15:12:31.554726+07	23	Honor_5	2	[{"changed": {"fields": ["category"]}}]	8	1
+87	2019-05-23 15:12:31.556612+07	22	Honor_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+88	2019-05-23 15:12:31.558686+07	21	Honor_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+89	2019-05-23 15:12:31.560726+07	20	Honor_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+90	2019-05-23 15:12:31.562886+07	19	Honor_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+91	2019-05-23 15:12:31.566238+07	18	LG_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+92	2019-05-23 15:12:31.568454+07	17	LG_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+93	2019-05-23 15:12:31.570451+07	16	BenQ_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+94	2019-05-23 15:12:31.57289+07	15	BenQ_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+95	2019-05-23 15:12:31.574842+07	14	Acer_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+96	2019-05-23 15:12:31.576843+07	13	Acer_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+97	2019-05-23 15:12:31.578931+07	12	Acer_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+98	2019-05-23 15:12:31.581277+07	11	Acer_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+99	2019-05-23 15:12:31.583848+07	10	Samsung_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+100	2019-05-23 15:12:31.58625+07	9	Samsung_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+101	2019-05-23 15:12:31.588458+07	8	Samsung_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+102	2019-05-23 15:12:31.590164+07	7	BenQ_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+103	2019-05-23 15:12:31.59214+07	6	LG_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+104	2019-05-23 15:44:53.253384+07	31	Huawei_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+105	2019-05-23 15:44:53.25638+07	30	Huawei_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+106	2019-05-23 15:44:53.258799+07	29	Huawei_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+107	2019-05-23 15:44:53.261077+07	28	iPhone_5	2	[{"changed": {"fields": ["category"]}}]	8	1
+108	2019-05-23 15:44:53.263184+07	27	iPhone_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+109	2019-05-23 15:44:53.265264+07	26	iPhone_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+110	2019-05-23 15:44:53.267092+07	25	iPhone_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+111	2019-05-23 15:44:53.268911+07	24	iPhone_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+112	2019-05-23 15:44:53.270767+07	23	Honor_5	2	[{"changed": {"fields": ["category"]}}]	8	1
+113	2019-05-23 15:44:53.272569+07	22	Honor_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+114	2019-05-23 15:44:53.274271+07	21	Honor_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+115	2019-05-23 15:44:53.275818+07	20	Honor_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+116	2019-05-23 15:44:53.277277+07	19	Honor_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+117	2019-05-23 15:44:53.278734+07	18	LG_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+118	2019-05-23 15:44:53.280216+07	17	LG_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+119	2019-05-23 15:44:53.282141+07	16	BenQ_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+120	2019-05-23 15:44:53.283672+07	15	BenQ_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+121	2019-05-23 15:44:53.285139+07	14	Acer_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+122	2019-05-23 15:44:53.296176+07	13	Acer_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+123	2019-05-23 15:44:53.298656+07	12	Acer_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+124	2019-05-23 15:44:53.300924+07	11	Acer_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+125	2019-05-23 15:44:53.303296+07	10	Samsung_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+126	2019-05-23 15:44:53.305691+07	9	Samsung_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+127	2019-05-23 15:44:53.308009+07	8	Samsung_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+128	2019-05-23 15:44:53.31036+07	7	BenQ_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+129	2019-05-23 15:44:53.313448+07	6	LG_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+130	2019-05-23 15:44:53.315939+07	5	LG_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+131	2019-05-23 16:07:43.684687+07	31	Huawei_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+132	2019-05-23 16:07:43.6965+07	31	Huawei_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+133	2019-05-23 16:07:54.529818+07	30	Huawei_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+134	2019-05-23 16:08:01.290775+07	29	Huawei_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+135	2019-05-23 16:08:09.320227+07	28	iPhone_5	2	[{"changed": {"fields": ["category"]}}]	8	1
+136	2019-05-23 16:08:14.891531+07	27	iPhone_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+137	2019-05-23 16:08:20.030982+07	26	iPhone_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+138	2019-05-23 16:08:27.578893+07	25	iPhone_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+139	2019-05-23 16:08:40.567405+07	24	iPhone_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+140	2019-05-23 16:08:46.839324+07	23	Honor_5	2	[{"changed": {"fields": ["category"]}}]	8	1
+141	2019-05-23 16:08:55.723085+07	22	Honor_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+142	2019-05-23 16:09:02.832754+07	21	Honor_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+143	2019-05-23 16:09:07.505792+07	20	Honor_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+144	2019-05-23 16:09:12.552668+07	19	Honor_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+145	2019-05-23 16:09:23.535182+07	18	LG_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+146	2019-05-23 16:09:28.687258+07	17	LG_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+147	2019-05-23 16:09:33.30021+07	16	BenQ_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+148	2019-05-23 16:11:10.25659+07	15	BenQ_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+149	2019-05-23 16:11:16.872343+07	14	Acer_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+150	2019-05-23 16:12:12.33628+07	13	Acer_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+151	2019-05-23 16:12:16.833002+07	12	Acer_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+152	2019-05-23 16:12:21.619852+07	11	Acer_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+153	2019-05-23 16:12:28.271504+07	10	Samsung_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+154	2019-05-23 16:12:33.166068+07	9	Samsung_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+155	2019-05-23 16:12:36.482991+07	8	Samsung_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+156	2019-05-23 16:12:42.623159+07	7	BenQ_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+157	2019-05-23 16:12:49.649246+07	6	LG_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+158	2019-05-23 16:12:54.049397+07	5	LG_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+159	2019-05-23 16:13:18.299233+07	27	iPhone_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+160	2019-05-23 16:13:32.985001+07	24	iPhone_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+161	2019-05-23 16:13:43.833737+07	26	iPhone_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+162	2019-05-23 16:13:50.513798+07	25	iPhone_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+163	2019-05-23 16:22:09.05912+07	28	iPhone_5	2	[{"changed": {"fields": ["category"]}}]	8	1
+164	2019-05-23 16:22:16.213247+07	21	Honor_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+258	2019-06-04 17:23:23.394276+07	31	qw	3		7	1
+165	2019-05-23 17:57:29.692821+07	31	Huawei_3	2	[]	8	1
+166	2019-05-23 17:57:40.21973+07	31	Huawei_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+167	2019-05-23 17:57:46.862205+07	31	Huawei_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+168	2019-05-23 17:58:20.08408+07	32	Samsung_4	1	[{"added": {}}]	8	1
+169	2019-05-23 17:59:08.085759+07	32	Samsung_4	3		8	1
+170	2019-05-24 10:21:22.046367+07	31	Huawei_3	2	[]	8	1
+171	2019-05-24 10:21:27.231766+07	30	Huawei_2	2	[]	8	1
+172	2019-05-24 10:21:31.433397+07	29	Huawei_1	2	[]	8	1
+173	2019-05-24 10:21:38.882476+07	28	iPhone_5	2	[]	8	1
+174	2019-05-24 10:21:42.606559+07	27	iPhone_4	2	[]	8	1
+175	2019-05-24 10:21:45.585555+07	26	iPhone_3	2	[]	8	1
+176	2019-05-24 10:21:48.227316+07	25	iPhone_2	2	[]	8	1
+177	2019-05-24 10:21:51.431555+07	24	iPhone_1	2	[]	8	1
+178	2019-05-24 10:21:54.350885+07	23	Honor_5	2	[]	8	1
+179	2019-05-24 10:22:02.952949+07	22	Honor_4	2	[]	8	1
+180	2019-05-24 10:22:05.850429+07	21	Honor_3	2	[]	8	1
+181	2019-05-24 10:22:09.222942+07	20	Honor_2	2	[]	8	1
+182	2019-05-24 10:22:12.05802+07	19	Honor_1	2	[]	8	1
+183	2019-05-24 10:22:15.62322+07	18	LG_4	2	[]	8	1
+184	2019-05-24 10:22:18.674561+07	17	LG_3	2	[]	8	1
+185	2019-05-24 10:22:22.393153+07	16	BenQ_3	2	[]	8	1
+186	2019-05-24 10:22:25.879179+07	15	BenQ_2	2	[]	8	1
+187	2019-05-24 10:22:29.442666+07	14	Acer_4	2	[]	8	1
+188	2019-05-24 10:22:33.284322+07	13	Acer_3	2	[]	8	1
+189	2019-05-24 10:22:38.327414+07	12	Acer_2	2	[]	8	1
+190	2019-05-24 10:22:42.64044+07	11	Acer_1	2	[]	8	1
+191	2019-05-24 10:22:45.983542+07	10	Samsung_3	2	[]	8	1
+192	2019-05-24 10:22:50.987575+07	9	Samsung_2	2	[]	8	1
+193	2019-05-24 10:22:54.755277+07	8	Samsung_1	2	[]	8	1
+194	2019-05-24 10:22:58.708955+07	7	BenQ_1	2	[]	8	1
+195	2019-05-24 10:23:03.265423+07	6	LG_2	2	[]	8	1
+196	2019-05-24 10:23:08.342946+07	5	LG_1	2	[]	8	1
+197	2019-05-24 10:45:25.840567+07	19	example	1	[{"added": {}}]	7	1
+198	2019-05-24 11:47:03.808833+07	19	example	3		7	1
+199	2019-05-27 18:00:28.102424+07	11	Acer_1	2	[{"changed": {"fields": ["description"]}}]	8	1
+200	2019-05-28 11:33:06.986411+07	20	Big	1	[{"added": {}}]	7	1
+201	2019-05-28 11:58:23.82449+07	21	Small	1	[{"added": {}}]	7	1
+202	2019-05-28 12:18:21.505206+07	21	Small	3		7	1
+203	2019-05-28 12:18:21.508737+07	20	Big	3		7	1
+204	2019-05-28 14:06:55.472295+07	31	Huawei_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+205	2019-05-28 14:06:55.474546+07	30	Huawei_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+206	2019-05-28 14:06:55.476682+07	29	Huawei_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+207	2019-05-28 14:06:55.478578+07	28	iPhone_5	2	[{"changed": {"fields": ["category"]}}]	8	1
+208	2019-05-28 14:06:55.480418+07	27	iPhone_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+209	2019-05-28 14:06:55.482232+07	26	iPhone_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+210	2019-05-28 14:06:55.484036+07	25	iPhone_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+211	2019-05-28 14:06:55.485811+07	24	iPhone_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+212	2019-05-28 14:06:55.48762+07	23	Honor_5	2	[{"changed": {"fields": ["category"]}}]	8	1
+213	2019-05-28 14:06:55.489411+07	22	Honor_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+214	2019-05-28 14:06:55.491085+07	21	Honor_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+215	2019-05-28 14:06:55.492817+07	20	Honor_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+216	2019-05-28 14:06:55.49473+07	19	Honor_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+217	2019-05-28 14:06:55.496469+07	18	LG_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+218	2019-05-28 14:06:55.498308+07	17	LG_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+219	2019-05-28 14:06:55.500025+07	16	BenQ_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+220	2019-05-28 14:06:55.501859+07	15	BenQ_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+221	2019-05-28 14:06:55.503634+07	14	Acer_4	2	[{"changed": {"fields": ["category"]}}]	8	1
+222	2019-05-28 14:06:55.505535+07	13	Acer_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+223	2019-05-28 14:06:55.507262+07	12	Acer_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+224	2019-05-28 14:06:55.508998+07	11	Acer_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+225	2019-05-28 14:06:55.511839+07	10	Samsung_3	2	[{"changed": {"fields": ["category"]}}]	8	1
+226	2019-05-28 14:06:55.513517+07	9	Samsung_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+227	2019-05-28 14:06:55.514966+07	8	Samsung_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+228	2019-05-28 14:06:55.516557+07	7	BenQ_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+229	2019-05-28 14:06:55.518128+07	6	LG_2	2	[{"changed": {"fields": ["category"]}}]	8	1
+230	2019-05-28 14:06:55.519672+07	5	LG_1	2	[{"changed": {"fields": ["category"]}}]	8	1
+231	2019-05-28 14:58:33.551839+07	22	Big	1	[{"added": {}}]	7	1
+232	2019-05-28 16:20:14.354184+07	22	Big	3		7	1
+233	2019-05-30 10:42:57.832717+07	23	category_one	1	[{"added": {}}]	7	1
+234	2019-05-30 10:43:10.09616+07	24	category_two	1	[{"added": {}}]	7	1
+235	2019-05-30 10:43:19.40699+07	24	category_two	2	[{"changed": {"fields": ["parent"]}}]	7	1
+236	2019-05-30 10:48:57.167456+07	24	category_two	3		7	1
+237	2019-05-30 10:48:57.170347+07	23	category_one	3		7	1
+238	2019-05-31 12:02:50.634643+07	25	hd	1	[{"added": {}}]	7	1
+239	2019-05-31 12:02:54.075414+07	26	sd	1	[{"added": {}}]	7	1
+240	2019-05-31 13:02:28.70772+07	26	sd	2	[{"changed": {"fields": ["parent"]}}]	7	1
+241	2019-05-31 13:23:46.217263+07	33	hd_1	1	[{"added": {}}]	8	1
+242	2019-05-31 13:24:02.69601+07	34	hd_2	1	[{"added": {}}]	8	1
+243	2019-05-31 14:45:23.104071+07	31	Huawei_3	2	[{"changed": {"fields": ["image"]}}]	8	1
+244	2019-05-31 14:47:16.356459+07	31	Huawei_3	2	[{"changed": {"fields": ["image"]}}]	8	1
+245	2019-05-31 14:47:32.765049+07	33	hd_1	2	[{"changed": {"fields": ["image"]}}]	8	1
+246	2019-05-31 14:47:50.828172+07	34	hd_2	2	[{"changed": {"fields": ["image"]}}]	8	1
+247	2019-06-04 17:11:30.927583+07	27	tv	1	[{"added": {}}]	7	1
+248	2019-06-04 17:11:41.437125+07	27	tv	3		7	1
+249	2019-06-04 17:20:47.746799+07	28	tv	1	[{"added": {}}]	7	1
+250	2019-06-04 17:21:11.974201+07	29	tv1	1	[{"added": {}}]	7	1
+251	2019-06-04 17:21:57.21671+07	29	tv1	3		7	1
+252	2019-06-04 17:21:57.219689+07	28	tv	3		7	1
+253	2019-06-04 17:22:05.912074+07	30	qw	1	[{"added": {}}]	7	1
+254	2019-06-04 17:22:28.460269+07	30	qw	3		7	1
+255	2019-06-04 17:22:58.95513+07	31	qw	1	[{"added": {}}]	7	1
+256	2019-06-04 17:23:07.49523+07	32	qwe	1	[{"added": {}}]	7	1
+257	2019-06-04 17:23:23.392154+07	32	qwe	3		7	1
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	group
+3	auth	permission
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	catalog	category
+8	catalog	product
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2019-05-16 16:48:01.87588+07
+2	auth	0001_initial	2019-05-16 16:48:01.914131+07
+3	admin	0001_initial	2019-05-16 16:48:01.929514+07
+4	admin	0002_logentry_remove_auto_add	2019-05-16 16:48:01.938382+07
+5	contenttypes	0002_remove_content_type_name	2019-05-16 16:48:01.956311+07
+6	auth	0002_alter_permission_name_max_length	2019-05-16 16:48:01.96167+07
+7	auth	0003_alter_user_email_max_length	2019-05-16 16:48:01.9704+07
+8	auth	0004_alter_user_username_opts	2019-05-16 16:48:01.978023+07
+9	auth	0005_alter_user_last_login_null	2019-05-16 16:48:01.986106+07
+10	auth	0006_require_contenttypes_0002	2019-05-16 16:48:01.98749+07
+11	auth	0007_alter_validators_add_error_messages	2019-05-16 16:48:01.995792+07
+12	auth	0008_alter_user_username_max_length	2019-05-16 16:48:02.00732+07
+13	catalog	0001_initial	2019-05-16 16:48:02.023882+07
+14	catalog	0002_auto_20190515_1627	2019-05-16 16:48:02.040123+07
+15	catalog	0003_auto_20190516_1646	2019-05-16 16:48:02.053314+07
+16	sessions	0001_initial	2019-05-16 16:48:02.059591+07
+17	catalog	0004_auto_20190517_1310	2019-05-17 13:11:17.116191+07
+18	catalog	0005_auto_20190520_1126	2019-05-20 11:26:18.904152+07
+19	catalog	0006_auto_20190520_1127	2019-05-20 11:27:31.736702+07
+20	catalog	0007_auto_20190521_1532	2019-05-21 15:32:50.066414+07
+21	catalog	0008_auto_20190521_1650	2019-05-21 16:50:30.269781+07
+22	catalog	0009_auto_20190521_1654	2019-05-21 16:54:19.95869+07
+23	catalog	0010_auto_20190523_1501	2019-05-23 15:02:08.748641+07
+24	catalog	0011_auto_20190523_1528	2019-05-23 15:32:04.06669+07
+25	catalog	0012_auto_20190523_1542	2019-05-23 15:42:28.076733+07
+26	catalog	0013_auto_20190523_1604	2019-05-23 16:04:08.744703+07
+27	catalog	0014_auto_20190528_1404	2019-05-28 14:04:28.809594+07
+28	catalog	0015_auto_20190604_1601	2019-06-04 16:01:30.997582+07
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+glgcj1ofv6bk7cam109zwozyz4oxqmca	ODA3ZDA5NGMzYTlkMDQ3NTYyMzg2YWNkNGM2YWM1MzM5YzcyOWJmNDp7Il9hdXRoX3VzZXJfaGFzaCI6ImQ4MTQ2MmE1YWY5OGUxYTU3MTRjY2Q4NTJmZTM3YmM1MWI3M2Y0MDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=	2019-05-31 10:17:05.640588+07
+r9f8zgztbyjcvd1jec2b8uhcce9uj7k1	ODA3ZDA5NGMzYTlkMDQ3NTYyMzg2YWNkNGM2YWM1MzM5YzcyOWJmNDp7Il9hdXRoX3VzZXJfaGFzaCI6ImQ4MTQ2MmE1YWY5OGUxYTU3MTRjY2Q4NTJmZTM3YmM1MWI3M2Y0MDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=	2019-06-04 13:03:17.225354+07
+2jod4wf3nrnhiq02fwtugskhe44nw883	ODA3ZDA5NGMzYTlkMDQ3NTYyMzg2YWNkNGM2YWM1MzM5YzcyOWJmNDp7Il9hdXRoX3VzZXJfaGFzaCI6ImQ4MTQ2MmE1YWY5OGUxYTU3MTRjY2Q4NTJmZTM3YmM1MWI3M2Y0MDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=	2019-06-06 12:25:31.353675+07
+mg7axxi8gy51yacrfyyd93v5v97rntrj	ODA3ZDA5NGMzYTlkMDQ3NTYyMzg2YWNkNGM2YWM1MzM5YzcyOWJmNDp7Il9hdXRoX3VzZXJfaGFzaCI6ImQ4MTQ2MmE1YWY5OGUxYTU3MTRjY2Q4NTJmZTM3YmM1MWI3M2Y0MDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=	2019-06-06 17:56:44.222693+07
+loowql9fbckywcp9t7x9jtnvojqh5lre	ODA3ZDA5NGMzYTlkMDQ3NTYyMzg2YWNkNGM2YWM1MzM5YzcyOWJmNDp7Il9hdXRoX3VzZXJfaGFzaCI6ImQ4MTQ2MmE1YWY5OGUxYTU3MTRjY2Q4NTJmZTM3YmM1MWI3M2Y0MDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=	2019-06-10 18:00:12.193558+07
+rvhg0wr4b1yxgp2sonw77syuihtlo1od	ODA3ZDA5NGMzYTlkMDQ3NTYyMzg2YWNkNGM2YWM1MzM5YzcyOWJmNDp7Il9hdXRoX3VzZXJfaGFzaCI6ImQ4MTQ2MmE1YWY5OGUxYTU3MTRjY2Q4NTJmZTM3YmM1MWI3M2Y0MDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=	2019-06-14 11:58:00.455862+07
+jx7xakjwfcamiuumkv0x25qlnmavolkn	ODA3ZDA5NGMzYTlkMDQ3NTYyMzg2YWNkNGM2YWM1MzM5YzcyOWJmNDp7Il9hdXRoX3VzZXJfaGFzaCI6ImQ4MTQ2MmE1YWY5OGUxYTU3MTRjY2Q4NTJmZTM3YmM1MWI3M2Y0MDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=	2019-06-14 13:02:21.294092+07
+2uq6f4of58is496in71u59qqx74psagg	ODA3ZDA5NGMzYTlkMDQ3NTYyMzg2YWNkNGM2YWM1MzM5YzcyOWJmNDp7Il9hdXRoX3VzZXJfaGFzaCI6ImQ4MTQ2MmE1YWY5OGUxYTU3MTRjY2Q4NTJmZTM3YmM1MWI3M2Y0MDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaWQiOiIxIn0=	2019-06-18 13:04:39.009495+07
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 24, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 1, true);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: catalog_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.catalog_category_id_seq', 32, true);
+
+
+--
+-- Name: catalog_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.catalog_product_id_seq', 34, true);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 258, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 8, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 28, true);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: catalog_category catalog_category_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.catalog_category
+    ADD CONSTRAINT catalog_category_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: catalog_product catalog_product_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.catalog_product
+    ADD CONSTRAINT catalog_product_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: catalog_category_parent_id_f61bd017; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX catalog_category_parent_id_f61bd017 ON public.catalog_category USING btree (parent_id);
+
+
+--
+-- Name: catalog_category_slug_dbf63ad0; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX catalog_category_slug_dbf63ad0 ON public.catalog_category USING btree (slug);
+
+
+--
+-- Name: catalog_category_slug_dbf63ad0_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX catalog_category_slug_dbf63ad0_like ON public.catalog_category USING btree (slug varchar_pattern_ops);
+
+
+--
+-- Name: catalog_product_category_id_35bf920b; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX catalog_product_category_id_35bf920b ON public.catalog_product USING btree (category_id);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: catalog_category catalog_category_parent_id_f61bd017_fk_catalog_category_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.catalog_category
+    ADD CONSTRAINT catalog_category_parent_id_f61bd017_fk_catalog_category_id FOREIGN KEY (parent_id) REFERENCES public.catalog_category(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: catalog_product catalog_product_category_id_35bf920b_fk_catalog_category_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.catalog_product
+    ADD CONSTRAINT catalog_product_category_id_35bf920b_fk_catalog_category_id FOREIGN KEY (category_id) REFERENCES public.catalog_category(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
