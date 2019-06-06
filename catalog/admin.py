@@ -3,22 +3,35 @@ from __future__ import unicode_literals
 
 # Register your models here.
 from django.contrib import admin
-
+from django import forms
 
 
 from .models import Category
 from .models import Product
 
 
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'parent', 'image']
-    prepopulated_fields = {'slug': ('name', )}
-    exclude = ('level', )
+class MyCategoryAdminForm(forms.ModelForm):
 
-    def save_model(self, request, obj, form, change):
-        obj.level = obj.parent.level+1
-        obj.full_clean()
-        super(CategoryAdmin, self).save_model(request, obj, form, change)
+    class Meta:
+        model = Category
+        fields = '__all__'
+        widgets = {
+            'level': forms.HiddenInput(),
+        }
+
+    def clean_level(self):
+        parent = self.cleaned_data['parent']
+        self.cleaned_data['level'] = parent.level + 1
+        if self.cleaned_data['level'] == 3:
+            raise forms.ValidationError('')
+        else:
+            return self.cleaned_data['level']
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug', 'parent', 'image')
+    prepopulated_fields = {'slug': ('name', )}
+    form = MyCategoryAdminForm
 
 
 class ProductAdmin(admin.ModelAdmin):
